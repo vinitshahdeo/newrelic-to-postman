@@ -12,7 +12,12 @@ npm install
 
 2. Provide New Relic's user API key in the `config.json`.
 
-```
+```json
+{
+    "newrelicAccountId": 2665918,
+    "newrelicUserApiKey": "XXXXXX", // replace this with your key
+    "newrelicNrqlUrl": "https://api.newrelic.com/graphql"
+}
 ```
 
 3. Run the following command to start the server
