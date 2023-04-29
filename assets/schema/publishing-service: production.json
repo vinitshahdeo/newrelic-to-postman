@@ -1,0 +1,175 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "publishing-service: production",
+        "version": "1.0.0",
+        "description": "Endpoints hosted by publishing-service: production service on New Relic.",
+        "contact": {
+            "name": "api-network squad",
+            "email": "api-network@postman.com",
+            "url": "#api-network on Slack"
+        }
+    },
+    "servers": [
+        {
+            "url": "publish.gw.postman.com"
+        },
+        {
+            "url": "pub.postman.co"
+        },
+        {
+            "url": "publish.gw.postman.co"
+        }
+    ],
+    "paths": {
+        "/": {
+            "get": {
+                "summary": "A GET operation in publishing-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        },
+        "/knockknock": {
+            "get": {
+                "summary": "A GET operation in publishing-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        },
+        "/v1/api/entity": {
+            "get": {
+                "summary": "A GET operation in publishing-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    },
+                    "400": {
+                        "description": "Response for 400 response code"
+                    }
+                }
+            }
+        },
+        "/*": {
+            "get": {
+                "summary": "A GET operation in publishing-service: production API",
+                "responses": {
+                    "404": {
+                        "description": "Response for 404 response code"
+                    }
+                }
+            },
+            "put": {
+                "summary": "A PUT operation in publishing-service: production API",
+                "responses": {
+                    "404": {
+                        "description": "Response for 404 response code"
+                    }
+                }
+            },
+            "post": {
+                "summary": "A POST operation in publishing-service: production API",
+                "responses": {
+                    "404": {
+                        "description": "Response for 404 response code"
+                    }
+                }
+            }
+        },
+        "/v1/api/team/:teamId": {
+            "get": {
+                "summary": "A GET operation in publishing-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    },
+                    "404": {
+                        "description": "Response for 404 response code"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "teamId",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/v1/api/user/:userId": {
+            "get": {
+                "summary": "A GET operation in publishing-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    },
+                    "404": {
+                        "description": "Response for 404 response code"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "userId",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/v1/api/template/:id/slug": {
+            "get": {
+                "summary": "A GET operation in publishing-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/v1/api/team": {
+            "get": {
+                "summary": "A GET operation in publishing-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        },
+        "/v1/api/template": {
+            "get": {
+                "summary": "A GET operation in publishing-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        },
+        "/v1/api/category": {
+            "get": {
+                "summary": "A GET operation in publishing-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        }
+    }
+}

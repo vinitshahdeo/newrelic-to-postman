@@ -1,0 +1,5 @@
+{
+    "newrelicAccountId": 2665918,
+    "newrelicUserApiKey": "XXXXXX",
+    "newrelicNrqlUrl": "https://api.newrelic.com/graphql"
+}
