@@ -61,7 +61,6 @@ async function makeApiCall({ method, data, endpoint, headers }) {
  * @returns {Promise<Array>} - Array of New Relic services.
  */
 async function fetchNRQLResponse(options) {
-
     let query = `
         query {
             actor {
@@ -72,7 +71,12 @@ async function fetchNRQLResponse(options) {
                             *
                         FROM
                             Transaction
-                        WHERE appId = ${options.appId}
+                        WHERE 
+                            appId = ${options.appId}
+                        AND 
+                            http.statusCode is not NULL
+                        AND 
+                            request.method is not NULL
                         LIMIT MAX"
                     ) {
                         results

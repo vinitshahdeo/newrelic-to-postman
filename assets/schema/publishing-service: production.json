@@ -42,19 +42,6 @@
                 }
             }
         },
-        "/v1/api/entity": {
-            "get": {
-                "summary": "A GET operation in publishing-service: production API",
-                "responses": {
-                    "200": {
-                        "description": "Response for 200 response code"
-                    },
-                    "400": {
-                        "description": "Response for 400 response code"
-                    }
-                }
-            }
-        },
         "/*": {
             "get": {
                 "summary": "A GET operation in publishing-service: production API",
@@ -77,6 +64,19 @@
                 "responses": {
                     "404": {
                         "description": "Response for 404 response code"
+                    }
+                }
+            }
+        },
+        "/v1/api/entity": {
+            "get": {
+                "summary": "A GET operation in publishing-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    },
+                    "400": {
+                        "description": "Response for 400 response code"
                     }
                 }
             }
@@ -117,6 +117,24 @@
             "parameters": [
                 {
                     "name": "userId",
+                    "in": "path",
+                    "required": true,
+                    "type": "string"
+                }
+            ]
+        },
+        "/v1/api/apinetwork/:id/slug": {
+            "get": {
+                "summary": "A GET operation in publishing-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            },
+            "parameters": [
+                {
+                    "name": "id",
                     "in": "path",
                     "required": true,
                     "type": "string"

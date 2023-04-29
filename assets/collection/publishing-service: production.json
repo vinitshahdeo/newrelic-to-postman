@@ -1,11 +1,238 @@
 {
     "item": [
         {
-            "id": "3e4cc92f-a5f7-4b5c-b58a-b6074d65f0ce",
+            "id": "d78c061c-dd3f-4165-a36f-203f0aa319ca",
+            "name": "A GET operation in publishing-service: production API",
+            "request": {
+                "name": "A GET operation in publishing-service: production API",
+                "description": {},
+                "url": {
+                    "path": [
+                        ""
+                    ],
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                },
+                "method": "GET",
+                "auth": null
+            },
+            "response": [
+                {
+                    "id": "c58dbb2e-c78c-43c2-93e7-bd198042e306",
+                    "name": "Response for 200 response code",
+                    "originalRequest": {
+                        "url": {
+                            "path": [
+                                ""
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "method": "GET",
+                        "body": {}
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/plain"
+                        }
+                    ],
+                    "body": "",
+                    "cookie": [],
+                    "_postman_previewlanguage": "text"
+                }
+            ],
+            "event": [],
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            }
+        },
+        {
+            "id": "19fefca9-6a20-4770-9309-71d31f3b28b3",
+            "name": "A GET operation in publishing-service: production API",
+            "request": {
+                "name": "A GET operation in publishing-service: production API",
+                "description": {},
+                "url": {
+                    "path": [
+                        "knockknock"
+                    ],
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "query": [],
+                    "variable": []
+                },
+                "method": "GET",
+                "auth": null
+            },
+            "response": [
+                {
+                    "id": "e1bbb223-5a18-4cf4-9120-90956158e8cd",
+                    "name": "Response for 200 response code",
+                    "originalRequest": {
+                        "url": {
+                            "path": [
+                                "knockknock"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": []
+                        },
+                        "method": "GET",
+                        "body": {}
+                    },
+                    "status": "OK",
+                    "code": 200,
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "text/plain"
+                        }
+                    ],
+                    "body": "",
+                    "cookie": [],
+                    "_postman_previewlanguage": "text"
+                }
+            ],
+            "event": [],
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            }
+        },
+        {
+            "id": "54dd18cf-2e62-4f4a-99e1-2871bfc996a6",
             "name": "v1/api",
             "item": [
                 {
-                    "id": "55d757f2-072f-46f9-9dde-5bd64dc6008f",
+                    "id": "fb7e60b3-3095-4157-8c11-6195d9ff6ca9",
+                    "name": "A GET operation in publishing-service: production API",
+                    "request": {
+                        "name": "A GET operation in publishing-service: production API",
+                        "description": {},
+                        "url": {
+                            "path": [
+                                "v1",
+                                "api",
+                                "user",
+                                ":userId"
+                            ],
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "query": [],
+                            "variable": [
+                                {
+                                    "disabled": false,
+                                    "type": "any",
+                                    "value": "",
+                                    "key": "userId",
+                                    "description": "(Required) "
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "auth": null
+                    },
+                    "response": [
+                        {
+                            "id": "e92b93fa-9d6c-404b-8d46-c29b6b8fc2c6",
+                            "name": "Response for 200 response code",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "v1",
+                                        "api",
+                                        "user",
+                                        ":userId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "disabled": false,
+                                            "type": "any",
+                                            "value": "",
+                                            "key": "userId",
+                                            "description": "(Required) "
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "OK",
+                            "code": 200,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "text/plain"
+                                }
+                            ],
+                            "body": "",
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        },
+                        {
+                            "id": "1af51578-2008-4bcd-9a30-f92f8cfab1c2",
+                            "name": "Response for 404 response code",
+                            "originalRequest": {
+                                "url": {
+                                    "path": [
+                                        "v1",
+                                        "api",
+                                        "user",
+                                        ":userId"
+                                    ],
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "query": [],
+                                    "variable": [
+                                        {
+                                            "disabled": false,
+                                            "type": "any",
+                                            "value": "",
+                                            "key": "userId",
+                                            "description": "(Required) "
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "body": {}
+                            },
+                            "status": "Not Found",
+                            "code": 404,
+                            "header": [
+                                {
+                                    "key": "Content-Type",
+                                    "value": "text/plain"
+                                }
+                            ],
+                            "body": "",
+                            "cookie": [],
+                            "_postman_previewlanguage": "text"
+                        }
+                    ],
+                    "event": [],
+                    "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                    }
+                },
+                {
+                    "id": "fb39b8d6-c0d7-4940-a557-7ce87a43a070",
                     "name": "A GET operation in publishing-service: production API",
                     "request": {
                         "name": "A GET operation in publishing-service: production API",
@@ -27,7 +254,7 @@
                     },
                     "response": [
                         {
-                            "id": "305175d7-6f42-4c95-a9d3-e0211c9aabda",
+                            "id": "2cf9de0a-3a9d-44d1-b51b-42aeb6d3e21a",
                             "name": "Response for 200 response code",
                             "originalRequest": {
                                 "url": {
@@ -58,7 +285,7 @@
                             "_postman_previewlanguage": "text"
                         },
                         {
-                            "id": "5595c746-1de3-489b-b917-b205dd2c57e5",
+                            "id": "0a5f32ad-f0e6-4433-ae8c-a2a0f86a7b62",
                             "name": "Response for 400 response code",
                             "originalRequest": {
                                 "url": {
@@ -95,11 +322,11 @@
                     }
                 },
                 {
-                    "id": "e5bcb4b2-4b92-4e71-89c3-f91502733026",
+                    "id": "030ef55a-e412-4073-982e-77f68424dd06",
                     "name": "team",
                     "item": [
                         {
-                            "id": "eacd8623-43e9-41ab-aeae-aea64bbf9ef4",
+                            "id": "ee99b51d-8d1c-470c-b4a5-899acc333855",
                             "name": "A GET operation in publishing-service: production API",
                             "request": {
                                 "name": "A GET operation in publishing-service: production API",
@@ -121,7 +348,7 @@
                             },
                             "response": [
                                 {
-                                    "id": "f6d8cc71-d1bc-4d16-84e8-6808a5f3d716",
+                                    "id": "ac7e64b3-0302-445b-b468-37112db2c97b",
                                     "name": "Response for 200 response code",
                                     "originalRequest": {
                                         "url": {
@@ -158,7 +385,7 @@
                             }
                         },
                         {
-                            "id": "b4ef7289-9549-4fbd-ac8a-a8115625fcf3",
+                            "id": "02bad05d-9948-4d9e-9408-2a2ace563e77",
                             "name": "A GET operation in publishing-service: production API",
                             "request": {
                                 "name": "A GET operation in publishing-service: production API",
@@ -189,7 +416,7 @@
                             },
                             "response": [
                                 {
-                                    "id": "662f8513-fdfa-4b82-9a9c-3e6e5cdd9157",
+                                    "id": "912ca713-4dc4-4e46-8269-b085ef9d2f4d",
                                     "name": "Response for 200 response code",
                                     "originalRequest": {
                                         "url": {
@@ -229,7 +456,7 @@
                                     "_postman_previewlanguage": "text"
                                 },
                                 {
-                                    "id": "cd7c70f9-5e0c-4fe5-8465-b6a2cb78df13",
+                                    "id": "6e47a1cc-15fe-45f2-a7f2-9784a2ff9bce",
                                     "name": "Response for 404 response code",
                                     "originalRequest": {
                                         "url": {
@@ -278,128 +505,11 @@
                     "event": []
                 },
                 {
-                    "id": "8ca0cdee-28c9-4155-b495-204da6de5928",
-                    "name": "A GET operation in publishing-service: production API",
-                    "request": {
-                        "name": "A GET operation in publishing-service: production API",
-                        "description": {},
-                        "url": {
-                            "path": [
-                                "v1",
-                                "api",
-                                "user",
-                                ":userId"
-                            ],
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "query": [],
-                            "variable": [
-                                {
-                                    "disabled": false,
-                                    "type": "any",
-                                    "value": "",
-                                    "key": "userId",
-                                    "description": "(Required) "
-                                }
-                            ]
-                        },
-                        "method": "GET",
-                        "auth": null
-                    },
-                    "response": [
-                        {
-                            "id": "736c336e-62e2-46d9-b9e2-c83d513d7ec0",
-                            "name": "Response for 200 response code",
-                            "originalRequest": {
-                                "url": {
-                                    "path": [
-                                        "v1",
-                                        "api",
-                                        "user",
-                                        ":userId"
-                                    ],
-                                    "host": [
-                                        "{{baseUrl}}"
-                                    ],
-                                    "query": [],
-                                    "variable": [
-                                        {
-                                            "disabled": false,
-                                            "type": "any",
-                                            "value": "",
-                                            "key": "userId",
-                                            "description": "(Required) "
-                                        }
-                                    ]
-                                },
-                                "method": "GET",
-                                "body": {}
-                            },
-                            "status": "OK",
-                            "code": 200,
-                            "header": [
-                                {
-                                    "key": "Content-Type",
-                                    "value": "text/plain"
-                                }
-                            ],
-                            "body": "",
-                            "cookie": [],
-                            "_postman_previewlanguage": "text"
-                        },
-                        {
-                            "id": "caecc8c5-4f38-49e7-aa7d-0d8ab39a51b6",
-                            "name": "Response for 404 response code",
-                            "originalRequest": {
-                                "url": {
-                                    "path": [
-                                        "v1",
-                                        "api",
-                                        "user",
-                                        ":userId"
-                                    ],
-                                    "host": [
-                                        "{{baseUrl}}"
-                                    ],
-                                    "query": [],
-                                    "variable": [
-                                        {
-                                            "disabled": false,
-                                            "type": "any",
-                                            "value": "",
-                                            "key": "userId",
-                                            "description": "(Required) "
-                                        }
-                                    ]
-                                },
-                                "method": "GET",
-                                "body": {}
-                            },
-                            "status": "Not Found",
-                            "code": 404,
-                            "header": [
-                                {
-                                    "key": "Content-Type",
-                                    "value": "text/plain"
-                                }
-                            ],
-                            "body": "",
-                            "cookie": [],
-                            "_postman_previewlanguage": "text"
-                        }
-                    ],
-                    "event": [],
-                    "protocolProfileBehavior": {
-                        "disableBodyPruning": true
-                    }
-                },
-                {
-                    "id": "513652a0-43dc-4f2a-b047-c4668a14dbc1",
+                    "id": "877a1df9-68bf-4108-b6b2-79e877ca580a",
                     "name": "template",
                     "item": [
                         {
-                            "id": "f2439cbf-0da1-4a58-a494-a2672ba3d867",
+                            "id": "62e735a9-a6b1-4722-aaea-b86579e805be",
                             "name": "A GET operation in publishing-service: production API",
                             "request": {
                                 "name": "A GET operation in publishing-service: production API",
@@ -421,7 +531,7 @@
                             },
                             "response": [
                                 {
-                                    "id": "d6836181-5c02-4903-a945-5b8005b79a75",
+                                    "id": "06392595-a537-487a-817e-db96a4f8037f",
                                     "name": "Response for 200 response code",
                                     "originalRequest": {
                                         "url": {
@@ -458,7 +568,7 @@
                             }
                         },
                         {
-                            "id": "0c74b23c-3f98-4fc6-92b1-95e6694cec49",
+                            "id": "30fd7b06-f82b-4227-85f1-ff2aeb1b22f6",
                             "name": "A GET operation in publishing-service: production API",
                             "request": {
                                 "name": "A GET operation in publishing-service: production API",
@@ -490,7 +600,7 @@
                             },
                             "response": [
                                 {
-                                    "id": "67ba4655-dda4-4210-a92b-1e667a1ac171",
+                                    "id": "1a95f137-4f9d-4f90-94dc-1387cff0e78e",
                                     "name": "Response for 200 response code",
                                     "originalRequest": {
                                         "url": {
@@ -540,7 +650,7 @@
                     "event": []
                 },
                 {
-                    "id": "46ddf578-6ed2-4e80-a5ce-ca8f9acfd58b",
+                    "id": "398b3b23-d6ee-419f-b736-346b0580481d",
                     "name": "A GET operation in publishing-service: production API",
                     "request": {
                         "name": "A GET operation in publishing-service: production API",
@@ -562,7 +672,7 @@
                     },
                     "response": [
                         {
-                            "id": "da0b64c7-98c6-4cc1-a561-7de718a589c6",
+                            "id": "b25b47c0-21ec-499a-a4d2-c3027db43b2d",
                             "name": "Response for 200 response code",
                             "originalRequest": {
                                 "url": {
@@ -602,121 +712,11 @@
             "event": []
         },
         {
-            "id": "b22f65ea-a3d3-49d9-8f7a-b85dfffa7068",
-            "name": "A GET operation in publishing-service: production API",
-            "request": {
-                "name": "A GET operation in publishing-service: production API",
-                "description": {},
-                "url": {
-                    "path": [
-                        ""
-                    ],
-                    "host": [
-                        "{{baseUrl}}"
-                    ],
-                    "query": [],
-                    "variable": []
-                },
-                "method": "GET",
-                "auth": null
-            },
-            "response": [
-                {
-                    "id": "43a9b02a-eee0-48ca-b9b0-087c4d419925",
-                    "name": "Response for 200 response code",
-                    "originalRequest": {
-                        "url": {
-                            "path": [
-                                ""
-                            ],
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "query": [],
-                            "variable": []
-                        },
-                        "method": "GET",
-                        "body": {}
-                    },
-                    "status": "OK",
-                    "code": 200,
-                    "header": [
-                        {
-                            "key": "Content-Type",
-                            "value": "text/plain"
-                        }
-                    ],
-                    "body": "",
-                    "cookie": [],
-                    "_postman_previewlanguage": "text"
-                }
-            ],
-            "event": [],
-            "protocolProfileBehavior": {
-                "disableBodyPruning": true
-            }
-        },
-        {
-            "id": "849567f3-f040-49ae-bf9a-2062862f5c18",
-            "name": "A GET operation in publishing-service: production API",
-            "request": {
-                "name": "A GET operation in publishing-service: production API",
-                "description": {},
-                "url": {
-                    "path": [
-                        "knockknock"
-                    ],
-                    "host": [
-                        "{{baseUrl}}"
-                    ],
-                    "query": [],
-                    "variable": []
-                },
-                "method": "GET",
-                "auth": null
-            },
-            "response": [
-                {
-                    "id": "390a9837-1055-4e19-ae77-7f0c09de2332",
-                    "name": "Response for 200 response code",
-                    "originalRequest": {
-                        "url": {
-                            "path": [
-                                "knockknock"
-                            ],
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "query": [],
-                            "variable": []
-                        },
-                        "method": "GET",
-                        "body": {}
-                    },
-                    "status": "OK",
-                    "code": 200,
-                    "header": [
-                        {
-                            "key": "Content-Type",
-                            "value": "text/plain"
-                        }
-                    ],
-                    "body": "",
-                    "cookie": [],
-                    "_postman_previewlanguage": "text"
-                }
-            ],
-            "event": [],
-            "protocolProfileBehavior": {
-                "disableBodyPruning": true
-            }
-        },
-        {
-            "id": "2f033b1e-b952-452f-909a-6266dd0e2daf",
+            "id": "eaf7f02b-1fa2-4d09-b5dd-2e1898b210a6",
             "name": "*",
             "item": [
                 {
-                    "id": "1600f2af-673f-4423-acd0-a82ce74c4bc4",
+                    "id": "878b66f9-180c-4c6e-8dec-2c5bcf149fb5",
                     "name": "A GET operation in publishing-service: production API",
                     "request": {
                         "name": "A GET operation in publishing-service: production API",
@@ -736,7 +736,7 @@
                     },
                     "response": [
                         {
-                            "id": "7aa9452f-99c7-4a89-99f3-aca8ce57a0b8",
+                            "id": "ca8910ff-5633-44fc-84b2-1dba26573ad8",
                             "name": "Response for 404 response code",
                             "originalRequest": {
                                 "url": {
@@ -771,7 +771,7 @@
                     }
                 },
                 {
-                    "id": "8a73197c-8d6d-42c1-82f6-fa8937af7d2d",
+                    "id": "b7eed29d-7d18-499e-90e1-fb0fe1bf851a",
                     "name": "A PUT operation in publishing-service: production API",
                     "request": {
                         "name": "A PUT operation in publishing-service: production API",
@@ -791,7 +791,7 @@
                     },
                     "response": [
                         {
-                            "id": "2703982b-e704-4f9e-aee6-5c84d075de69",
+                            "id": "6011f1bb-407a-4c9d-8be2-0401346c53c0",
                             "name": "Response for 404 response code",
                             "originalRequest": {
                                 "url": {
@@ -826,7 +826,7 @@
                     }
                 },
                 {
-                    "id": "295daa50-ab77-4292-9793-d205bc9ba172",
+                    "id": "093fa224-7098-4cc1-9d67-b889aaa67f6c",
                     "name": "A POST operation in publishing-service: production API",
                     "request": {
                         "name": "A POST operation in publishing-service: production API",
@@ -846,7 +846,7 @@
                     },
                     "response": [
                         {
-                            "id": "38fed41e-c25a-4004-9165-00ec4557c5c3",
+                            "id": "b046bdee-ea08-4139-8e10-9688a9a532cc",
                             "name": "Response for 404 response code",
                             "originalRequest": {
                                 "url": {
@@ -893,7 +893,7 @@
         }
     ],
     "info": {
-        "_postman_id": "03cf7245-6abf-4a67-afc7-8ea3367b8c78",
+        "_postman_id": "6933daf3-ac1d-4d3f-bcf9-bb975cea4396",
         "name": "publishing-service: production",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
         "description": {

@@ -1,0 +1,84 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "watch-service: production",
+        "version": "1.0.0",
+        "description": "Endpoints hosted by watch-service: production service on New Relic.",
+        "contact": {
+            "name": "version-control squad",
+            "email": "version-control@postman.com",
+            "url": "https://postman.slack.com/version-control"
+        }
+    },
+    "servers": [
+        {
+            "url": "watch.postman.tech"
+        }
+    ],
+    "paths": {
+        "/v1/watchers/count": {
+            "get": {
+                "summary": "A GET operation in watch-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    },
+                    "403": {
+                        "description": "Response for 403 response code"
+                    }
+                }
+            }
+        },
+        "/v1/watch": {
+            "get": {
+                "summary": "A GET operation in watch-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    },
+                    "403": {
+                        "description": "Response for 403 response code"
+                    }
+                }
+            },
+            "post": {
+                "summary": "A POST operation in watch-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        },
+        "/v1/watcher/preferences/config": {
+            "get": {
+                "summary": "A GET operation in watch-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        },
+        "/v1/watchers": {
+            "get": {
+                "summary": "A GET operation in watch-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        },
+        "/v1/event": {
+            "post": {
+                "summary": "A POST operation in watch-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        }
+    }
+}

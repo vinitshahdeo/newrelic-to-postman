@@ -66,7 +66,7 @@ function generateOpenAPISpec(data) {
             contact: {
                 name: `${domain} squad`,
                 email: `${domain}@postman.com`,
-                url: `#${domain} on Slack`
+                url: `https://postman.slack.com/${domain}`
             }
         },
         servers: getServers(hosts),

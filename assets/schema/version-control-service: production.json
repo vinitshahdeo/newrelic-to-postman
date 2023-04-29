@@ -1,0 +1,126 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "version-control-service: production",
+        "version": "1.0.0",
+        "description": "Endpoints hosted by version-control-service: production service on New Relic.",
+        "contact": {
+            "name": "version-control squad",
+            "email": "version-control@postman.com",
+            "url": "#version-control on Slack"
+        }
+    },
+    "servers": [
+        {
+            "url": "vcs.postman.tech"
+        }
+    ],
+    "paths": {
+        "/v1/changelog/bulk": {
+            "post": {
+                "summary": "A POST operation in version-control-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        },
+        "/v1/changelog": {
+            "post": {
+                "summary": "A POST operation in version-control-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            },
+            "get": {
+                "summary": "A GET operation in version-control-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        },
+        "/": {
+            "post": {
+                "summary": "A POST operation in version-control-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            },
+            "get": {
+                "summary": "A GET operation in version-control-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        },
+        "/v1/diverged/bulk": {
+            "post": {
+                "summary": "A POST operation in version-control-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        },
+        "/v1/tags": {
+            "get": {
+                "summary": "A GET operation in version-control-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        },
+        "/knockknock": {
+            "get": {
+                "summary": "A GET operation in version-control-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        },
+        "/v1/forks/find": {
+            "post": {
+                "summary": "A POST operation in version-control-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        },
+        "/v1/pull-requests": {
+            "get": {
+                "summary": "A GET operation in version-control-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        },
+        "/v1/event": {
+            "post": {
+                "summary": "A POST operation in version-control-service: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        }
+    }
+}

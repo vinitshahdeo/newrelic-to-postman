@@ -49,6 +49,11 @@ function extractRoutePaths(data) {
             return route ? `/${route.split('/').slice(1).join('/')}` : '/';
         }
 
+        if (name.startsWith('WebTransaction/Expressjs') && method) {
+            const route = name.substring('WebTransaction/Expressjs/'.length).split(' ')[1];
+            return route ? `/${route.split('/').slice(1).join('/')}` : '/';
+        }
+
         return name;
     });
 }

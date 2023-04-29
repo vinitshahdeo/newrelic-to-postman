@@ -1,0 +1,55 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "trace-processor: production",
+        "version": "1.0.0",
+        "description": "Endpoints hosted by trace-processor: production service on New Relic.",
+        "contact": {
+            "name": "api-observability squad",
+            "email": "api-observability@postman.com",
+            "url": "#api-observability on Slack"
+        }
+    },
+    "servers": [
+        {
+            "url": "10.0.254.105:1337"
+        },
+        {
+            "url": "10.0.180.143:1337"
+        },
+        {
+            "url": "10.0.189.157:1337"
+        },
+        {
+            "url": "10.0.115.97:1337"
+        },
+        {
+            "url": "localhost:1337"
+        },
+        {
+            "url": "trace-processor.postman.tech"
+        }
+    ],
+    "paths": {
+        "/knockknock": {
+            "get": {
+                "summary": "A GET operation in trace-processor: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        },
+        "/collection": {
+            "put": {
+                "summary": "A PUT operation in trace-processor: production API",
+                "responses": {
+                    "200": {
+                        "description": "Response for 200 response code"
+                    }
+                }
+            }
+        }
+    }
+}

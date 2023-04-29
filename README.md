@@ -33,3 +33,10 @@ npm start
 - The collection is created under `assets/collection` folder.
 - The Open API schema is created under `assets/schema` folder.
 
+## Example service Ids
+
+- 964198481 : version-control-service: production
+- 1032549101 : publishing-service: production
+- 889348647 : watch-service: production
+
+> **NOTE:** Demo import flow with the watch service
