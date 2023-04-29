@@ -1,2 +1,30 @@
 # newrelic-to-postman
-Convert NR transaction to Open API
+
+An Express app to convert New Relic transactions to Open API definiton or Postman collection.
+
+## Local Development
+
+1. Install dependencies
+
+```
+npm install
+```
+
+2. Provide New Relic's user API key in the `config.json`.
+
+```
+```
+
+3. Run the following command to start the server
+
+```
+npm start
+```
+
+4. Hit `htttp://localhost:3000/transactions/:appId`. Replace `appId` with the service ID from New Relic, e.g. http://localhost:3000/transactions/1032549101
+
+## Directory
+
+- The collection is created under `assets/collection` folder.
+- The Open API schema is created under `assets/schema` folder.
+
