@@ -28,6 +28,8 @@ npm start
 
 4. Hit `htttp://localhost:3000/transactions/:appId`. Replace `appId` with the service ID from New Relic, e.g. http://localhost:3000/transactions/1032549101
 
+> NOTE: Use `develop` branch for development.
+
 ## Directory
 
 - The collection is created under `assets/collection` folder.
