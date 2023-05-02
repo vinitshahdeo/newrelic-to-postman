@@ -4,6 +4,8 @@ An Express app to convert New Relic transactions to Open API definition or Postm
 
 ## Local Development
 
+> Use Node 14 or above.
+
 1. Install dependencies
 
 ```
