@@ -1,6 +1,6 @@
 # newrelic-to-postman
 
-An Express app to convert New Relic transactions to Open API definiton or Postman collection.
+An Express app to convert New Relic transactions to Open API definition or Postman collection.
 
 ## Local Development
 
