@@ -1,5 +1,6 @@
 {
     "newrelicAccountId": 2665918,
     "newrelicUserApiKey": "XXXXXX",
-    "newrelicNrqlUrl": "https://api.newrelic.com/graphql"
+    "newrelicNrqlUrl": "https://api.newrelic.com/graphql",
+    "postmanAPIKey": "XXXXXX"
 }
