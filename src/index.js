@@ -1,5 +1,6 @@
 const express = require('express'),
     fs = require('fs'),
+    postmanPublicAPIService = require('./postmanPublicAPIService'),
     newrelicAgent = require('./newrelicAgent'),
     app = express(),
     config = require('../config.json'),
@@ -30,10 +31,16 @@ app.get('/transactions/:appId', (req, res) => {
                 if (err) throw err;
 
                 // Write collection to file
-                fs.writeFile(`${ROOT_FILE['collection']}/${collection.info.name}.json`, JSON.stringify(collection, null, 4), (err) => {
+                fs.writeFile(`${ROOT_FILE['collection']}/${collection.info.name}.json`, JSON.stringify(collection, null, 4), async (err) => {
                     if (err) throw err;
 
                     console.info('Postman collection file saved!');
+                    const data = {
+                        workspace: '17435413-8f28-4c77-8c05-c85521257921',
+                        body: { collection }
+                    };
+
+                    await postmanPublicAPIService.createCollection(data);
                     res.send(collection);
                 });
             });
