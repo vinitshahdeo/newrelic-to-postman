@@ -36,11 +36,18 @@ app.get('/transactions/:appId', (req, res) => {
                 if (err) throw err;
 
                 // Write collection to file
-                fs.writeFile(`${ROOT_FILE['collection']}/${collection.info.name}.json`, JSON.stringify(collection, null, 4), (err) => {
+                fs.writeFile(`${ROOT_FILE['collection']}/${collection.info.name}.json`, JSON.stringify(collection, null, 4), async (err) => {
                     if (err) throw err;
 
                     console.info('Postman collection file saved!');
-                    res.send(collection);
+
+                    const workspaceId = config["postmanWorkspaceId"],
+                        response = await postmanSdk.createCollection({ collection }, workspaceId)
+
+                    res.send({
+                        id: response?.collection?.id,
+                        content: collection,
+                    });
                 });
             });
         } else {
@@ -74,7 +81,7 @@ app.post('/sync/:apiId', (req, res) => {
     postmanSdk.getCollection(collectionId)
         .then((collectionResponse) => {
             const collectionData = collectionResponse.collection;
-            return postmanToOpenApi(JSON.stringify(collectionData), null, {outputFormat: 'json'});
+            return postmanToOpenApi(JSON.stringify(collectionData), null, { outputFormat: 'json' });
         })
         .then((openApiSpec) => {
             /**
@@ -98,8 +105,11 @@ app.post('/sync/:apiId', (req, res) => {
             // edge case: multi-file schema / git-linked APIs
             return postmanSdk.updateSchema(apiId, schemaId, 'index.json', mergedSchema);
         })
-        .then((finalResponse) => {
-            return res.send(finalResponse);
+        .then((response) => {
+            return res.send({
+                sync: true,
+                details: response
+            });
         })
         .catch((err) => {
             console.error(err);

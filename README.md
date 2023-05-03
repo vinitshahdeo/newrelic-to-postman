@@ -4,6 +4,8 @@ An Express app to convert New Relic transactions to Open API definition or Postm
 
 ## Local Development
 
+> Use Node 14 or above.
+
 1. Install dependencies
 
 ```
@@ -27,6 +29,8 @@ npm start
 ```
 
 4. Hit `htttp://localhost:3000/transactions/:appId`. Replace `appId` with the service ID from New Relic, e.g. http://localhost:3000/transactions/1032549101
+
+> NOTE: Use `develop` branch for development.
 
 ## Directory
 

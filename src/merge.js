@@ -7,7 +7,7 @@ const diff = require('deep-diff').diff,
  * @param {Object} spec2 - Schema generated using New Relic
  */
 function mergeOpenApiSpec (spec1, spec2) {
-    const specDiff = diff(spec2.paths, spec1.paths), // What has changed in New Relic?
+    const specDiff = diff(spec1.paths, spec2.paths), // What has changed in New Relic?
 
         // a temp OAS definition which will be populated with the changes and later be merged with schema in Postman
         openApiSpec = {info: {}, paths: {}}; //
