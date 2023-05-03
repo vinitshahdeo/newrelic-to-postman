@@ -1,6 +1,5 @@
 const express = require('express'),
     fs = require('fs'),
-    postmanPublicAPIService = require('./postmanPublicAPIService'),
     newrelicAgent = require('./newrelicAgent'),
     postmanSdk = require('./postmanSdk'),
     { mergeOpenApiSpec } = require('./merge'),
@@ -41,13 +40,14 @@ app.get('/transactions/:appId', (req, res) => {
                     if (err) throw err;
 
                     console.info('Postman collection file saved!');
-                    const data = {
-                        workspace: '17435413-8f28-4c77-8c05-c85521257921',
-                        body: { collection }
-                    };
 
-                    await postmanPublicAPIService.createCollection(data);
-                    res.send(collection);
+                    const workspaceId = config["postmanWorkspaceId"],
+                        response = await postmanSdk.createCollection({ collection }, workspaceId)
+
+                    res.send({
+                        id: response?.collection?.id,
+                        content: collection,
+                    });
                 });
             });
         } else {
@@ -81,7 +81,7 @@ app.post('/sync/:apiId', (req, res) => {
     postmanSdk.getCollection(collectionId)
         .then((collectionResponse) => {
             const collectionData = collectionResponse.collection;
-            return postmanToOpenApi(JSON.stringify(collectionData), null, {outputFormat: 'json'});
+            return postmanToOpenApi(JSON.stringify(collectionData), null, { outputFormat: 'json' });
         })
         .then((openApiSpec) => {
             /**
@@ -105,8 +105,11 @@ app.post('/sync/:apiId', (req, res) => {
             // edge case: multi-file schema / git-linked APIs
             return postmanSdk.updateSchema(apiId, schemaId, 'index.json', mergedSchema);
         })
-        .then((finalResponse) => {
-            return res.send(finalResponse);
+        .then((response) => {
+            return res.send({
+                sync: true,
+                details: response
+            });
         })
         .catch((err) => {
             console.error(err);

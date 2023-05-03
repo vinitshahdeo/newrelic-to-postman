@@ -60,10 +60,26 @@ async function getCollection (collectionId) {
     return response.json();
 }
 
+async function createCollection (data, workspaceId) {
+    const options = {
+            method: 'post',
+            headers: {
+                'X-Api-Key': config['postmanApiKey']
+            },
+            body: JSON.stringify(data)
+        },
+        params = new URLSearchParams({
+            workspace: workspaceId
+        }),
+        response = await fetch(`${config['postmanBaseUrl']}/collections?${params}`, options);
+
+    return response.json();
+}
 
 module.exports = {
     getApi,
     getSchema,
     updateSchema,
-    getCollection
+    getCollection,
+    createCollection
 }
