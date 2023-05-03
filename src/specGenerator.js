@@ -1,9 +1,10 @@
 const {
-    extractPathParamNames,
     extractRoutePaths,
     getServers,
     hasPathParams,
-    getHeadersFromTransaction
+    getHeadersFromTransaction,
+    convertPath,
+    getPathParams
 } = require('./utils'),
     Converter = require('openapi-to-postmanv2');
 
@@ -18,7 +19,7 @@ function generateOpenAPISpec(data) {
 
     // Loop through transaction data to generate routes
     data.forEach(transaction => {
-        const name = transaction['name'];
+        const name = transaction['name'] && convertPath(transaction['name']);
         const method = transaction['request.method'].toLowerCase();
         const status = transaction['http.statusCode'];
         const headers = getHeadersFromTransaction(transaction);
@@ -50,7 +51,7 @@ function generateOpenAPISpec(data) {
         }
 
         if (hasPathParams(route)) {
-            routes[route]['parameters'] = extractPathParamNames(route);
+            routes[route]['parameters'] = getPathParams(route);
         }
 
         // Add headers

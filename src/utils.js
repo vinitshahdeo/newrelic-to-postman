@@ -1,7 +1,7 @@
 const EXCLUDED_HEADERS = ['host']; // Exclude these headers in OpenAPI spec params
 
 function hasPathParams(routePath) {
-    return routePath.split('/').some(segment => segment.startsWith(':'));
+    return routePath.split('/').some(segment => segment.startsWith('{') && segment.endsWith('}'));
 }
 
 function getServers(hosts) {
@@ -24,12 +24,21 @@ function getServers(hosts) {
     return servers;
 }
 
+function getPathParams(path) {
+    const pathParams = path.match(/{(\w+)}/g) || [];
+
+    return pathParams.map((param) => {
+        return {
+            name: param.slice(1, -1), in: 'path', required: true, type: 'string'
+        }
+    });
+}
 
 function extractPathParamNames(route) {
     const pathParams = [];
     const params = route
         .split('/')
-        .filter(segment => segment.startsWith(':'))
+        .filter(segment => segment.startsWith('{') && segment.endsWith('}'))
         .map(segment => segment.slice(1));
 
     params.forEach((param) => {
@@ -85,10 +94,27 @@ function extractRoutePaths(data) {
     });
 }
 
+/**
+ * Converts a New Relic path to an OpenAPI path by replacing placeholders with path parameters.
+ * :param -> {param}
+ *
+ * Example: GET /users/:id is converted to GET /users/{id}
+ *
+ * @param {string} path - The New Relic path to convert.
+ * @returns {string} The corresponding OpenAPI path.
+ */
+function convertPath(path) {
+    if (!path) return path;
+
+    return path.replace(/:(\w+)/g, '{$1}');
+}
+
 module.exports = {
     hasPathParams,
     extractPathParamNames,
     extractRoutePaths,
     getServers,
-    getHeadersFromTransaction
+    getHeadersFromTransaction,
+    convertPath,
+    getPathParams
 };
