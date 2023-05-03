@@ -1,7 +1,8 @@
 {
     "newrelicAccountId": 2665918,
-    "newrelicUserApiKey": "XXXXXX",
+    "newrelicUserApiKey": "XXXX",
     "newrelicNrqlUrl": "https://api.newrelic.com/graphql",
     "postmanBaseUrl": "https://api.getpostman.com",
-    "postmanApiKey": "XXXXXX"
+    "postmanApiKey": "XXXX",
+    "postmanWorkspaceId": "dd00d541-3751-4d64-8d4c-48c85920db59"
 }
