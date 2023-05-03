@@ -1,0 +1,33 @@
+[
+  {
+    "type": "Added",
+    "path": [
+      "/v1/permissions/check",
+      "patch"
+    ],
+    "value": {
+      "summary": "A POST operation in version-control-service: production API",
+      "responses": {
+        "200": {
+          "description": "Response for 200 response code"
+        }
+      }
+    }
+  },
+  {
+    "type": "Added",
+    "path": [
+      "/v1/permissions/checkEntity"
+    ],
+    "value": {
+      "post": {
+        "summary": "A POST operation in version-control-service: production API",
+        "responses": {
+          "200": {
+            "description": "Response for 200 response code"
+          }
+        }
+      }
+    }
+  }
+]
