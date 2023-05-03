@@ -1,3 +1,5 @@
+const EXCLUDED_HEADERS = ['host']; // Exclude these headers in OpenAPI spec params
+
 function hasPathParams(routePath) {
     return routePath.split('/').some(segment => segment.startsWith(':'));
 }
@@ -39,6 +41,31 @@ function extractPathParamNames(route) {
     return pathParams;
 }
 
+function getHeadersFromTransaction(transactionData) {
+    const headersRegex = /^request\.headers\.(.*)$/,
+        headers = [];
+
+    Object.keys(transactionData).forEach(key => {
+        const header = headersRegex.exec(key) && headersRegex.exec(key)[1];
+        if (header && !EXCLUDED_HEADERS.includes(header)) {
+            // exclude host as it's added to the servers info
+
+            const headerObj = {
+                name: header,
+                in: 'header',
+                description: 'A header observed in New Relic traffic',
+                required: true,
+                type: 'string'
+            }
+
+            headers.push(headerObj);
+        }
+    });
+
+    return headers;
+}
+
+
 function extractRoutePaths(data) {
     return data.map(transaction => {
         const name = transaction.name;
@@ -62,5 +89,6 @@ module.exports = {
     hasPathParams,
     extractPathParamNames,
     extractRoutePaths,
-    getServers
+    getServers,
+    getHeadersFromTransaction
 };

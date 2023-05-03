@@ -2,7 +2,8 @@ const {
     extractPathParamNames,
     extractRoutePaths,
     getServers,
-    hasPathParams
+    hasPathParams,
+    getHeadersFromTransaction
 } = require('./utils'),
     Converter = require('openapi-to-postmanv2');
 
@@ -20,9 +21,11 @@ function generateOpenAPISpec(data) {
         const name = transaction['name'];
         const method = transaction['request.method'].toLowerCase();
         const status = transaction['http.statusCode'];
+        const headers = getHeadersFromTransaction(transaction);
         apiName = transaction.appName;
-        domain = transaction['tags.Domain'],
-            hosts.add(transaction['request.headers.host']);
+        domain = transaction['tags.Domain'];
+
+        hosts.add(transaction['request.headers.host']);
 
         const route = extractRoutePaths([{
             name,
@@ -48,6 +51,14 @@ function generateOpenAPISpec(data) {
 
         if (hasPathParams(route)) {
             routes[route]['parameters'] = extractPathParamNames(route);
+        }
+
+        // Add headers
+        if (Array.isArray(headers) && headers.length) {
+            const parameters = routes[route]['parameters'] || [];
+
+            parameters.push(...headers);
+            routes[route]['parameters'] = parameters;
         }
 
         // Add response for route and method

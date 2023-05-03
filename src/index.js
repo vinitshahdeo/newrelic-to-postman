@@ -1,8 +1,12 @@
 const express = require('express'),
     fs = require('fs'),
     newrelicAgent = require('./newrelicAgent'),
+    postmanSdk = require('./postmanSdk'),
+    { mergeOpenApiSpec } = require('./merge'),
     app = express(),
+    bodyParser = require('body-parser'),
     config = require('../config.json'),
+    postmanToOpenApi = require('postman-to-openapi'),
     {
         generateOpenAPISpec,
         generatePostmanCollection
@@ -12,6 +16,8 @@ const express = require('express'),
         collection: 'assets/collection',
         schema: 'assets/schema'
     };
+
+app.use(bodyParser.json());
 
 // Define route to get transaction data for a given app ID
 app.get('/transactions/:appId', (req, res) => {
@@ -54,6 +60,51 @@ app.get('/transactions/:appId', (req, res) => {
         console.error(err);
         res.status(500).send('Error getting transaction data from New Relic');
     });
+});
+
+
+// Sync transactions from the New Relic to Postman
+app.post('/sync/:apiId', (req, res) => {
+    const apiId = req.params.apiId,
+        collectionId = req.body.collectionId;
+
+    let newrelicSchema,
+        schemaId;
+
+    postmanSdk.getCollection(collectionId)
+        .then((collectionResponse) => {
+            const collectionData = collectionResponse.collection;
+            return postmanToOpenApi(JSON.stringify(collectionData), null, {outputFormat: 'json'});
+        })
+        .then((openApiSpec) => {
+            /**
+             * This is the schema generated using collection which is created with the NR transactions
+             */
+            newrelicSchema = JSON.parse(openApiSpec);
+            return postmanSdk.getApi(apiId);
+        })
+        .then((api) => {
+            schemaId = api.schemas[0]?.id; // todo: add safe checks
+            return postmanSdk.getSchema(apiId, schemaId);
+        })
+        .then((data) => {
+            const schemaContent = data.content,
+                postmanSchema = JSON.parse(schemaContent);
+
+            return mergeOpenApiSpec(postmanSchema, newrelicSchema);
+        })
+        .then((mergedSchema) => {
+            // @todo: Get file name of schema before updating it
+            // edge case: multi-file schema / git-linked APIs
+            return postmanSdk.updateSchema(apiId, schemaId, 'index.json', mergedSchema);
+        })
+        .then((finalResponse) => {
+            return res.send(finalResponse);
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send(err && err.toString() || 'Error while syncing endpoints from New Relic to Postman');
+        });
 });
 
 app.listen(3000, () => console.log('Server running on port 3000'));
