@@ -7,6 +7,7 @@ function hasPathParams(routePath) {
 function getServers(hosts) {
     const filteredHosts = Array.from(hosts).filter((host) => {
         // If the host is an IP address, exclude it
+        // @todo: exclude port as well
         if (/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/.test(host)) {
             return false;
         }

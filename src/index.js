@@ -6,7 +6,6 @@ const express = require('express'),
     app = express(),
     bodyParser = require('body-parser'),
     config = require('../config.json'),
-    postmanToOpenApi = require('postman-to-openapi'),
     {
         generateOpenAPISpec,
         generatePostmanCollection
@@ -15,9 +14,16 @@ const express = require('express'),
     ROOT_FILE = {
         collection: 'assets/collection',
         schema: 'assets/schema'
-    };
+    },
+    { transpile } = require('postman2openapi');
 
 app.use(bodyParser.json());
+
+app.get('/knockknock', (req, res) => {
+    res.send({
+        health: 'ok'
+    });
+});
 
 // Define route to get transaction data for a given app ID
 app.get('/transactions/:appId', (req, res) => {
@@ -69,7 +75,6 @@ app.get('/transactions/:appId', (req, res) => {
     });
 });
 
-
 // Sync transactions from the New Relic to Postman
 app.post('/sync/:apiId', (req, res) => {
     const apiId = req.params.apiId,
@@ -81,17 +86,15 @@ app.post('/sync/:apiId', (req, res) => {
     postmanSdk.getCollection(collectionId)
         .then((collectionResponse) => {
             const collectionData = collectionResponse.collection;
-            return postmanToOpenApi(JSON.stringify(collectionData), null, { outputFormat: 'json' });
-        })
-        .then((openApiSpec) => {
             /**
              * This is the schema generated using collection which is created with the NR transactions
              */
-            newrelicSchema = JSON.parse(openApiSpec);
+            newrelicSchema = transpile(collectionData);
+
             return postmanSdk.getApi(apiId);
         })
         .then((api) => {
-            schemaId = api.schemas[0]?.id; // todo: add safe checks
+            schemaId = api?.schemas[0]?.id;
             return postmanSdk.getSchema(apiId, schemaId);
         })
         .then((data) => {
