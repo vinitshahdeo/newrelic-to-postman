@@ -1,11 +1,12 @@
 const {
-    extractRoutePaths,
-    getServers,
-    hasPathParams,
-    getHeadersFromTransaction,
-    convertPath,
-    getPathParams
-} = require('./utils'),
+        extractRoutePaths,
+        getServers,
+        hasPathParams,
+        getHeadersFromTransaction,
+        convertPath,
+        getPathParams
+    } = require('../helpers/utils'),
+    statusCode = require('../helpers/statusCode'),
     Converter = require('openapi-to-postmanv2');
 
 // Function to generate OpenAPI spec from transaction data
@@ -37,14 +38,14 @@ function generateOpenAPISpec(data) {
             // Check if method already exists for route
             if (!routes[route][method]) {
                 routes[route][method] = {
-                    summary: `A ${method.toUpperCase()} operation in ${apiName} API`,
+                    summary: '',
                     responses: {}
                 };
             }
         } else {
             routes[route] = {
                 [method]: {
-                    summary: `A ${method.toUpperCase()} operation in ${apiName} API`,
+                    summary: '',
                     responses: {}
                 }
             };
@@ -64,7 +65,7 @@ function generateOpenAPISpec(data) {
 
         // Add response for route and method
         routes[route][method].responses[status] = {
-            description: `Response for ${status} response code`
+            description: `${status} ${statusCode[status]}`
         };
     });
 
