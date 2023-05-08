@@ -17,7 +17,7 @@ async function getApi (apiId) {
     return response.json();
 }
 
-async function getSchema (apiId, schemaId) {
+async function getBundledSchema (apiId, schemaId) {
     const options = {
             headers: {
                 Accept: 'application/vnd.api.v10+json',
@@ -32,8 +32,20 @@ async function getSchema (apiId, schemaId) {
     return response.json();
 }
 
-async function updateSchema (apiId, schemaId, filePath, fileContent) {
-    const updatedSchema = JSON.stringify(fileContent, null, 4),
+async function getSchema (apiId, schemaId) {
+    const options = {
+            headers: {
+                Accept: 'application/vnd.api.v10+json',
+                'X-Api-Key': config['postmanApiKey']
+            }
+        },
+        response = await fetch(`${config['postmanBaseUrl']}/apis/${apiId}/schemas/${schemaId}`, options);
+
+    return response.json();
+}
+
+async function updateSchema (apiId, schemaId, filePath, fileContent, format) {
+    const updatedSchema = format === 'json' ? JSON.stringify(fileContent, null, 4) : fileContent,
         options = {
             method: 'put',
             body: JSON.stringify({
@@ -79,6 +91,7 @@ async function createCollection (data, workspaceId) {
 module.exports = {
     getApi,
     getSchema,
+    getBundledSchema,
     updateSchema,
     getCollection,
     createCollection

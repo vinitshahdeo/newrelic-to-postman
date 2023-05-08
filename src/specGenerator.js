@@ -5,7 +5,7 @@ const {
         getHeadersFromTransaction,
         convertPath,
         getPathParams
-    } = require('./utils'),
+    } = require('../helpers/utils'),
     statusCode = require('../helpers/statusCode'),
     Converter = require('openapi-to-postmanv2');
 

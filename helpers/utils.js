@@ -25,6 +25,14 @@ function getServers(hosts) {
     return servers;
 }
 
+function getFileFormat (fileName) {
+    if (!fileName) throw new Error('Empty file name is not allowed');
+
+    if (fileName.endsWith('.json')) return 'json';
+    
+    return 'yaml';
+}
+
 function getPathParams(path) {
     const pathParams = path.match(/{(\w+)}/g) || [];
 
@@ -117,5 +125,6 @@ module.exports = {
     getServers,
     getHeadersFromTransaction,
     convertPath,
-    getPathParams
+    getPathParams,
+    getFileFormat
 };

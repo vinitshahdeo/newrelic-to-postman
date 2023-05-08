@@ -2,8 +2,8 @@ const express = require('express'),
     fs = require('fs'),
     newrelicAgent = require('./newrelicAgent'),
     postmanSdk = require('./postmanSdk'),
-    { mergeOpenApiSpec } = require('./merge'),
-    app = express(),
+    { merge, diff } = require('./openapi'),
+    YAML = require('yaml'),
     bodyParser = require('body-parser'),
     config = require('../config.json'),
     {
@@ -15,7 +15,9 @@ const express = require('express'),
         collection: 'assets/collection',
         schema: 'assets/schema'
     },
-    { transpile } = require('postman2openapi');
+    {getFileFormat} = require('../helpers/utils'),
+    { transpile } = require('postman2openapi'),
+    app = express();
 
 app.use(bodyParser.json());
 
@@ -29,6 +31,12 @@ app.get('/knockknock', (req, res) => {
 app.get('/transactions/:appId', (req, res) => {
     const appId = req.params.appId,
         type = req.query.type;
+
+    if (!appId) {
+        return res.status(400).send({
+            error: 'Please provide a valid New Relic App ID.'
+        });
+    }
 
     newrelicAgent.fetchNRQLResponse({
         appId,
@@ -80,8 +88,18 @@ app.post('/sync/:apiId', (req, res) => {
     const apiId = req.params.apiId,
         collectionId = req.body.collectionId;
 
-    let newrelicSchema,
+    if (!apiId) {
+        return res.status(400).send({
+            error: 'Please provide API Id.'
+        });
+    }
+
+    let format = 'json', // default format is JSON 
+        fileName = 'index.json',
+        newrelicSchema,
+        postmanSchema,
         schemaId;
+        
 
     postmanSdk.getCollection(collectionId)
         .then((collectionResponse) => {
@@ -97,21 +115,76 @@ app.post('/sync/:apiId', (req, res) => {
             schemaId = api?.schemas[0]?.id;
             return postmanSdk.getSchema(apiId, schemaId);
         })
-        .then((data) => {
-            const schemaContent = data.content,
-                postmanSchema = JSON.parse(schemaContent);
-
-            return mergeOpenApiSpec(postmanSchema, newrelicSchema);
+        .then((schema) => {
+            fileName = schema?.files?.data[0]?.name;
+            format = getFileFormat(fileName);
+    
+            return postmanSdk.getBundledSchema(apiId, schemaId);
         })
-        .then((mergedSchema) => {
+        .then((data) => {
+            postmanSchema = JSON.parse(data.content || {});
+
+            const mergedSchema = merge(postmanSchema, newrelicSchema),
+                doc = new YAML.Document(); // For yaml conversion
+
+            if (format === 'yaml') {
+                doc.contents = mergedSchema;
+                mergedSchema = doc.toString();
+            }
+            
             // @todo: Get file name of schema before updating it
             // edge case: multi-file schema / git-linked APIs
-            return postmanSdk.updateSchema(apiId, schemaId, 'index.json', mergedSchema);
+            return postmanSdk.updateSchema(apiId, schemaId, fileName, mergedSchema, format);
         })
         .then((response) => {
             return res.send({
                 sync: true,
                 details: response
+            });
+        })
+        .catch((err) => {
+            console.error(err);
+            res.status(500).send(err && err.toString() || 'Error while syncing endpoints from New Relic to Postman');
+        });
+});
+
+/**
+ * Diff b/w an API and a collection.
+ * Returns the patch which will be merged during sync
+ */
+app.get('/diff', (req, res) => {
+    const apiId = req.query.apiId,
+        collectionId = req.query.collectionId;
+
+    if (!apiId || !collectionId) {
+        return res.status(400).send({
+            error: 'Please provide both API Id and Collection Id.'
+        });
+    }
+
+    let newrelicSchema,
+        schemaId;
+
+    postmanSdk.getCollection(collectionId)
+        .then((collectionResponse) => {
+            const collectionData = collectionResponse.collection;
+            /**
+             * This is the schema generated using collection which is created with the NR transactions
+             */
+            newrelicSchema = transpile(collectionData);
+
+            return postmanSdk.getApi(apiId);
+        })
+        .then((api) => {
+            schemaId = api?.schemas[0]?.id;
+            return postmanSdk.getBundledSchema(apiId, schemaId);
+        })
+        .then((data) => {
+            const schemaContent = data.content,
+                postmanSchema = JSON.parse(schemaContent);
+
+            return res.send({
+                diff: diff(postmanSchema, newrelicSchema)
             });
         })
         .catch((err) => {
