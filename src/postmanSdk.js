@@ -88,11 +88,29 @@ async function createCollection (data, workspaceId) {
     return response.json();
 }
 
+async function createAPIExclusiveCollection (data, apiId) {
+    const options = {
+            method: 'post',
+            headers: {
+                Accept: 'application/vnd.api.v10+json',
+                'X-Api-Key': config['postmanApiKey']
+            },
+            body: JSON.stringify({
+                operationType: 'CREATE_NEW',
+                data
+            })
+        },
+        response = await fetch(`${config['postmanBaseUrl']}/apis/${apiId}/collections`, options);
+
+    return response.json();
+}
+
 module.exports = {
     getApi,
     getSchema,
     getBundledSchema,
     updateSchema,
     getCollection,
-    createCollection
+    createCollection,
+    createAPIExclusiveCollection
 }
