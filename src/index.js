@@ -83,6 +83,60 @@ app.get('/transactions/:appId', (req, res) => {
     });
 });
 
+// Define route to get transaction data for a given app ID
+app.get('/nr-transactions/:appId', (req, res) => {
+    const appId = req.params.appId,
+        type = req.query.type,
+        apiId = req.query.apiId;
+
+    if (!appId) {
+        return res.status(400).send({
+            error: 'Please provide a valid New Relic App ID.'
+        });
+    }
+
+    newrelicAgent.getAllTransactions({
+        appId,
+        apiKey: config['newrelicUserApiKey'],
+        accountId: config['newrelicAccountId']
+    }).then((response) => {
+        if (type === POSTMAN_COLLECTION) {
+            generatePostmanCollection(response, (err, collection) => {
+                if (err) throw err;
+
+                // Write collection to file
+                fs.writeFile(`${ROOT_FILE['collection']}/${collection.info.name}.json`, JSON.stringify(collection, null, 4), async (err) => {
+                    if (err) throw err;
+
+                    console.info('Postman collection file saved!');
+
+                    const response = await postmanSdk.createAPIExclusiveCollection(collection, apiId);
+
+                    res.send({
+                        id: response?.id,
+                        content: collection,
+                    });
+                });
+            });
+        } else {
+            const openApi = generateOpenAPISpec(response);
+
+            // Write OpenAPI spec to file
+            fs.writeFile(`${ROOT_FILE['schema']}/${openApi.info.title}.json`, JSON.stringify(openApi, null, 4), (err) => {
+                if (err) throw err;
+
+                console.info('OpenAPI spec file saved!');
+                res.send(openApi);
+            });
+        }
+
+
+    }).catch((err) => {
+        console.error(err);
+        res.status(500).send('Error getting transaction data from New Relic');
+    });
+});
+
 // Sync transactions from the New Relic to Postman
 app.post('/sync/:apiId', (req, res) => {
     const apiId = req.params.apiId,
@@ -124,7 +178,7 @@ app.post('/sync/:apiId', (req, res) => {
         .then((data) => {
             postmanSchema = JSON.parse(data.content || {});
 
-            const mergedSchema = merge(postmanSchema, newrelicSchema),
+            let mergedSchema = merge(postmanSchema, newrelicSchema),
                 doc = new YAML.Document(); // For yaml conversion
 
             if (format === 'yaml') {
@@ -181,10 +235,17 @@ app.get('/diff', (req, res) => {
         })
         .then((data) => {
             const schemaContent = data.content,
-                postmanSchema = JSON.parse(schemaContent);
+                postmanSchema = JSON.parse(schemaContent),
+                diffSchema = diff(postmanSchema, newrelicSchema)
 
-            return res.send({
-                diff: diff(postmanSchema, newrelicSchema)
+            fs.writeFile('assets/diff/diff.json', JSON.stringify(diffSchema, null, 4), (err) => {
+                if (err) throw err;
+                
+                console.log('Saved the diff inside assets/diff folder');
+
+                return res.send({
+                    diff: diffSchema
+                });
             });
         })
         .catch((err) => {

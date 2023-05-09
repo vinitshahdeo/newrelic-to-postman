@@ -44,6 +44,7 @@ npm start
 - 964198481 : version-control-service: production
 - 1032549101 : publishing-service: production
 - 889348647 : watch-service: production
+- 872206312: Integrations Platform service
 
 > **NOTE:** Demo import flow with the watch service
 
