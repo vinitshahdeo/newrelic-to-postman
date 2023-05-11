@@ -19,8 +19,9 @@ npm install
 ```json
 {
     "newrelicAccountId": 2665918,
-    "newrelicUserApiKey": "XXXXXX", // replace this with your key
-    "newrelicNrqlUrl": "https://api.newrelic.com/graphql"
+    "newrelicUserApiKey": "XXXXXX", // Replace this with your key
+    "newrelicNrqlUrl": "https://api.newrelic.com/graphql",
+    "postmanApiKey": "XXXXXXX" // Replace this with your Postman API Key
 }
 ```
 
