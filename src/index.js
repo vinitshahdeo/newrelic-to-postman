@@ -87,7 +87,7 @@ app.get('/transactions/:appId', (req, res) => {
 app.get('/nr-transactions/:appId', (req, res) => {
     const appId = req.params.appId,
         type = req.query.type,
-        apiId = req.query.apiId;
+        collectionId = req.query.collectionId;
 
     if (!appId) {
         return res.status(400).send({
@@ -110,10 +110,10 @@ app.get('/nr-transactions/:appId', (req, res) => {
 
                     console.info('Postman collection file saved!');
 
-                    const response = await postmanSdk.createAPIExclusiveCollection(collection, apiId);
+                    const response = await postmanSdk.updateCollection(collectionId, {collection});
 
                     res.send({
-                        id: response?.id,
+                        id: response?.collection?.id,
                         content: collection,
                     });
                 });
@@ -148,12 +148,12 @@ app.post('/sync/:apiId', (req, res) => {
         });
     }
 
-    let format = 'json', // default format is JSON 
+    let format = 'json', // default format is JSON
         fileName = 'index.json',
         newrelicSchema,
         postmanSchema,
         schemaId;
-        
+
 
     postmanSdk.getCollection(collectionId)
         .then((collectionResponse) => {
@@ -172,7 +172,7 @@ app.post('/sync/:apiId', (req, res) => {
         .then((schema) => {
             fileName = schema?.files?.data[0]?.name;
             format = getFileFormat(fileName);
-    
+
             return postmanSdk.getBundledSchema(apiId, schemaId);
         })
         .then((data) => {
@@ -185,7 +185,7 @@ app.post('/sync/:apiId', (req, res) => {
                 doc.contents = mergedSchema;
                 mergedSchema = doc.toString();
             }
-            
+
             // @todo: Get file name of schema before updating it
             // edge case: multi-file schema / git-linked APIs
             return postmanSdk.updateSchema(apiId, schemaId, fileName, mergedSchema, format);
@@ -240,7 +240,7 @@ app.get('/diff', (req, res) => {
 
             fs.writeFile('assets/diff/diff.json', JSON.stringify(diffSchema, null, 4), (err) => {
                 if (err) throw err;
-                
+
                 console.log('Saved the diff inside assets/diff folder');
 
                 return res.send({
