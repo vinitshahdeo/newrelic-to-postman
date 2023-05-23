@@ -108,7 +108,14 @@ function generatePostmanCollection(data, cb) {
             });
         }
         else {
-            return cb(null, conversionResult.output[0].data);
+            const convertedData = conversionResult.output[0].data,
+                pmCollection = {
+                collection: {
+                    ...convertedData
+                }
+            };
+
+            return cb(null, pmCollection);
         }
     });
 }

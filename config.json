@@ -2,7 +2,9 @@
     "newrelicAccountId": 2665918,
     "newrelicUserApiKey": "XXXX",
     "newrelicNrqlUrl": "https://api.newrelic.com/graphql",
-    "postmanBaseUrl": "https://api.getpostman.com",
+    "postmanBaseUrl": "https://api.getpostman-beta.com",
+    "syncBaseUrl": "https://sync-v4.getpostman-beta.com",
     "postmanApiKey": "XXXX",
-    "postmanWorkspaceId": "dd00d541-3751-4d64-8d4c-48c85920db59"
+    "postmanAccessToken": "XXXX",
+    "postmanWorkspaceId": "c4a189b8-e175-40f7-a651-2172728f3f13"
 }

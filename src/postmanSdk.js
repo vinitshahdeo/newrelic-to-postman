@@ -88,6 +88,34 @@ async function createCollection (data, workspaceId) {
     return response.json();
 }
 
+async function updateCollection (collectionId, data) {
+    const options = {
+            method: 'put',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Api-Key': config['postmanApiKey']
+            },
+            body: JSON.stringify(data)
+        },
+        response = await fetch(`${config['postmanBaseUrl']}/collections/${collectionId}`, options);
+
+    return response.json();
+}
+
+async function deepPatchCollection (collectionId, data) {
+    const options = {
+            method: 'patch',
+            headers: {
+                'x-access-token': config['postmanAccessToken'],
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        },
+        response = await fetch(`${config['syncBaseUrl']}/collection/${collectionId}/merge`, options);
+
+    return response.json();
+}
+
 async function createAPIExclusiveCollection (data, apiId) {
     const options = {
             method: 'post',
@@ -112,5 +140,6 @@ module.exports = {
     updateSchema,
     getCollection,
     createCollection,
-    createAPIExclusiveCollection
+    updateCollection,
+    deepPatchCollection
 }

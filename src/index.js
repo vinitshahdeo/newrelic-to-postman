@@ -15,7 +15,7 @@ const express = require('express'),
         collection: 'assets/collection',
         schema: 'assets/schema'
     },
-    {getFileFormat} = require('../helpers/utils'),
+    {getFileFormat, getPatchPayload} = require('../helpers/utils'),
     { transpile } = require('postman2openapi'),
     app = express();
 
@@ -84,10 +84,10 @@ app.get('/transactions/:appId', (req, res) => {
 });
 
 // Define route to get transaction data for a given app ID
-app.get('/nr-transactions/:appId', (req, res) => {
+app.get('/nr-transactions/:appId', async (req, res) => {
     const appId = req.params.appId,
         type = req.query.type,
-        apiId = req.query.apiId;
+        collectionId = req.query.collectionId;
 
     if (!appId) {
         return res.status(400).send({
@@ -101,21 +101,20 @@ app.get('/nr-transactions/:appId', (req, res) => {
         accountId: config['newrelicAccountId']
     }).then((response) => {
         if (type === POSTMAN_COLLECTION) {
-            generatePostmanCollection(response, (err, collection) => {
+            generatePostmanCollection(response, (err, newrelicCollection) => {
                 if (err) throw err;
 
                 // Write collection to file
-                fs.writeFile(`${ROOT_FILE['collection']}/${collection.info.name}.json`, JSON.stringify(collection, null, 4), async (err) => {
+                fs.writeFile(`${ROOT_FILE['collection']}/${newrelicCollection.collection.info.name}.json`, JSON.stringify(newrelicCollection, null, 4), async (err) => {
                     if (err) throw err;
 
                     console.info('Postman collection file saved!');
 
-                    const response = await postmanSdk.createAPIExclusiveCollection(collection, apiId);
+                    const originalCollection = await postmanSdk.getCollection(collectionId),
+                        patchPayload = getPatchPayload(originalCollection.collection, newrelicCollection.collection),
+                        response = await postmanSdk.deepPatchCollection(collectionId, patchPayload);
 
-                    res.send({
-                        id: response?.id,
-                        content: collection,
-                    });
+                    res.send(response);
                 });
             });
         } else {
@@ -148,12 +147,12 @@ app.post('/sync/:apiId', (req, res) => {
         });
     }
 
-    let format = 'json', // default format is JSON 
+    let format = 'json', // default format is JSON
         fileName = 'index.json',
         newrelicSchema,
         postmanSchema,
         schemaId;
-        
+
 
     postmanSdk.getCollection(collectionId)
         .then((collectionResponse) => {
@@ -172,7 +171,7 @@ app.post('/sync/:apiId', (req, res) => {
         .then((schema) => {
             fileName = schema?.files?.data[0]?.name;
             format = getFileFormat(fileName);
-    
+
             return postmanSdk.getBundledSchema(apiId, schemaId);
         })
         .then((data) => {
@@ -185,7 +184,7 @@ app.post('/sync/:apiId', (req, res) => {
                 doc.contents = mergedSchema;
                 mergedSchema = doc.toString();
             }
-            
+
             // @todo: Get file name of schema before updating it
             // edge case: multi-file schema / git-linked APIs
             return postmanSdk.updateSchema(apiId, schemaId, fileName, mergedSchema, format);
@@ -240,7 +239,7 @@ app.get('/diff', (req, res) => {
 
             fs.writeFile('assets/diff/diff.json', JSON.stringify(diffSchema, null, 4), (err) => {
                 if (err) throw err;
-                
+
                 console.log('Saved the diff inside assets/diff folder');
 
                 return res.send({
