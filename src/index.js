@@ -15,7 +15,7 @@ const express = require('express'),
         collection: 'assets/collection',
         schema: 'assets/schema'
     },
-    {getFileFormat} = require('../helpers/utils'),
+    {getFileFormat, getPatchPayload} = require('../helpers/utils'),
     { transpile } = require('postman2openapi'),
     app = express();
 
@@ -84,7 +84,7 @@ app.get('/transactions/:appId', (req, res) => {
 });
 
 // Define route to get transaction data for a given app ID
-app.get('/nr-transactions/:appId', (req, res) => {
+app.get('/nr-transactions/:appId', async (req, res) => {
     const appId = req.params.appId,
         type = req.query.type,
         collectionId = req.query.collectionId;
@@ -101,21 +101,20 @@ app.get('/nr-transactions/:appId', (req, res) => {
         accountId: config['newrelicAccountId']
     }).then((response) => {
         if (type === POSTMAN_COLLECTION) {
-            generatePostmanCollection(response, (err, collection) => {
+            generatePostmanCollection(response, (err, newrelicCollection) => {
                 if (err) throw err;
 
                 // Write collection to file
-                fs.writeFile(`${ROOT_FILE['collection']}/${collection.info.name}.json`, JSON.stringify(collection, null, 4), async (err) => {
+                fs.writeFile(`${ROOT_FILE['collection']}/${newrelicCollection.collection.info.name}.json`, JSON.stringify(newrelicCollection, null, 4), async (err) => {
                     if (err) throw err;
 
                     console.info('Postman collection file saved!');
 
-                    const response = await postmanSdk.updateCollection(collectionId, {collection});
+                    const originalCollection = await postmanSdk.getCollection(collectionId),
+                        patchPayload = getPatchPayload(originalCollection.collection, newrelicCollection.collection),
+                        response = await postmanSdk.deepPatchCollection(collectionId, patchPayload);
 
-                    res.send({
-                        id: response?.collection?.id,
-                        content: collection,
-                    });
+                    res.send(response);
                 });
             });
         } else {

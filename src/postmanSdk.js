@@ -102,6 +102,20 @@ async function updateCollection (collectionId, data) {
     return response.json();
 }
 
+async function deepPatchCollection (collectionId, data) {
+    const options = {
+            method: 'patch',
+            headers: {
+                'x-access-token': config['postmanAccessToken'],
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        },
+        response = await fetch(`${config['syncBaseUrl']}/collection/${collectionId}/merge`, options);
+
+    return response.json();
+}
+
 async function createAPIExclusiveCollection (data, apiId) {
     const options = {
             method: 'post',
@@ -126,5 +140,6 @@ module.exports = {
     updateSchema,
     getCollection,
     createCollection,
-    updateCollection
+    updateCollection,
+    deepPatchCollection
 }
